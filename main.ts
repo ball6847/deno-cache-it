@@ -18,7 +18,9 @@ const denoJson: DenoLock = JSON.parse(new TextDecoder().decode(buffer));
 let code = "";
 
 for (const module of Object.keys(denoJson.remote)) {
-  code += `import "${module}";\n`;
+  if (!module.endsWith(".json")) {
+    code += `import "${module}";\n`;
+  }
 }
 
 for await (const key of Object.keys(denoJson.npm.packages)) {
