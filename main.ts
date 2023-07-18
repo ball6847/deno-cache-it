@@ -23,8 +23,10 @@ for (const module of Object.keys(denoJson.remote)) {
   }
 }
 
-for await (const key of Object.keys(denoJson.npm.packages)) {
-  code += `import "npm:${key}";\n`;
+if (denoJson.npm?.packages) {
+  for await (const key of Object.keys(denoJson.npm.packages)) {
+    code += `import "npm:${key}";\n`;
+  }
 }
 
 const tmp = await Deno.makeTempFile({
